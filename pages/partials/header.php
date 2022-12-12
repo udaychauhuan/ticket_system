@@ -6,6 +6,14 @@ $login = new Login();
 $user = $login->check_login($_SESSION['ticket_userid']);
 $msg = $result = "";
 
+$id = $_SESSION['ticket_userid'];
+$user_st = new User();
+$user_status = $user_st->user_status($id);
+if ($user_status) {
+    $admin = true;
+} else {
+    $user1 = true;
+}
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 // admin panel
 
@@ -61,7 +69,7 @@ if (isset($_POST['edit_user'])) {
         if ($result) {
             $msg = "user data updated succesfully .";
         } else {
-            $msg = "user data not updated please check again .!!!";
+            $msg = "email already present .. try anothet email.!!!";
         }
     } else {
         $msg = "please check the  check box.!";
@@ -80,7 +88,7 @@ if (isset($_POST['delete_user'])) {
         if ($result) {
             $msg = "user deleted  succesfully .";
         } else {
-            $msg = "user  not deleted please check again .!!!";
+            $msg = "you can't delete this user. !!!";
         }
     } else {
         $msg = "please check the  check box.!";
@@ -188,6 +196,11 @@ $status_alert = "<div class='alert' style='background-color:$color;text-align:ce
     <!-- side manu bar -->
     <div id="mySidenav" class="sidenav" style="background: linear-gradient(to right, #FF4B2B, #FF416C)!important;text-decoration:none;color:white;">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <?php
+        if ( $user || $admin){
+            # code...
+        ?>
+        <li 
         <!-- profile details -->
         <li class="nav-item dropdown" style="list-style-type:none;">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
@@ -200,6 +213,12 @@ $status_alert = "<div class='alert' style='background-color:$color;text-align:ce
                 <a class="dropdown-item " href="../admincontroller/Edit_admin.php">EDIT</a>
             </div>
         </li>
+        <?php
+        }
+        if ($admin) {
+            # code...
+       
+        ?>
         <div class="dropdown-divider"></div>
         <!-- user details in case of admin -->
         <li class="nav-item dropdown" style="list-style-type:none;">
@@ -222,6 +241,10 @@ $status_alert = "<div class='alert' style='background-color:$color;text-align:ce
                 <a class="dropdown-item " href="../ticketconroller/create_ticket.php"> <i class="fa fa-plus-circle" aria-hidden="true"></i> CREATE <br> TICKET</a>
             </div>
         </li>
+        <?php
+         }
+        
+        ?>
         <div class="dropdown-divider"></div>
         <!-- logout function -->
         <a href="../logout.php"><i class="fa fa-power-off"></i><span> LOGOUT </span></a>

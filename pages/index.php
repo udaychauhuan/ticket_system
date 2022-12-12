@@ -1,14 +1,25 @@
-<?php 
+<?php
 include('../class/classloader.php');
 session_start();
-if(isset($_SESSION['ticket_userid']))
-    {
+$admin = $user1 = "";
+if (isset($_SESSION['ticket_userid'])) {
     $login = new Login();
     $user = $login->check_login($_SESSION['ticket_userid']);
-    }else {
-        header("location: login&signup.php");
-        die;
+
+    // cheching is user is admin or normal user
+    $id = $_SESSION['ticket_userid'];
+    $user_st = new User();
+    $user_status = $user_st->user_status($id);
+    if ($user_status) {
+        $admin = true;
+    } else {
+        $user1 = true;
     }
+} else {
+    header("location: login&signup.php");
+    die;
+}
+
 
 ?>
 
@@ -33,6 +44,10 @@ if(isset($_SESSION['ticket_userid']))
     <div id="mySidenav" class="sidenav" style="background: linear-gradient(to right, #FF4B2B, #FF416C)!important;text-decoration:none;color:white;">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <!-- profile details -->
+        <?php
+        if ( $user || $admin) {
+            # code...
+        ?>
         <li class="nav-item dropdown" style="list-style-type:none;">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                 <i class="fa fa-user-circle-o" aria-hidden="true"></i>
@@ -44,6 +59,12 @@ if(isset($_SESSION['ticket_userid']))
                 <a class="dropdown-item " href="./admincontroller/Edit_admin.php">EDIT</a>
             </div>
         </li>
+        <?php
+        }
+        if ($admin) {
+            # code...
+       
+        ?>
         <div class="dropdown-divider"></div>
         <!-- user details in case of admin -->
         <li class="nav-item dropdown" style="list-style-type:none;">
@@ -66,6 +87,10 @@ if(isset($_SESSION['ticket_userid']))
                 <a class="dropdown-item " href="./ticketconroller/create_ticket.php"> <i class="fa fa-plus-circle" aria-hidden="true"></i> CREATE <br> TICKET</a>
             </div>
         </li>
+        <?php
+         }
+        
+        ?>
         <div class="dropdown-divider"></div>
         <!-- logout function -->
         <a href="./logout.php"><i class="fa fa-power-off"></i><span> LOGOUT </span></a>
@@ -86,7 +111,7 @@ if(isset($_SESSION['ticket_userid']))
                     <li class="nav-item active d-flex">
                         <!-- user profile -->
                         <span style="color: white; margin-top:7px" style="position: absolute;"><i class="fa fa-user"></i></span>
-                        <a class="nav-link" href="#"><?= $user['name']?> <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#"><?= $user['name'] ?> <span class="sr-only">(current)</span></a>
                         <div class="dropdown mr-5">
                             <button class="btn btn-secondary dropdown-toggle " type="button" data-toggle="dropdown" aria-expanded="false">
                             </button>
@@ -105,7 +130,15 @@ if(isset($_SESSION['ticket_userid']))
 
         <div id="main-work-place">
             <!-- main working area -->
-           <?php include('./admincontroller/view_admin.php')?>
+            <?php
+            if ($admin == true) {
+                include('./admincontroller/view_admin.php');
+            } elseif ($user1 ==  true) {
+                include('./admincontroller/view_user.php');
+            }
+
+            ?>
+
             <!-- MAIN work place end -->
         </div>
 
@@ -114,6 +147,7 @@ if(isset($_SESSION['ticket_userid']))
     <!-- footer -->
 
     <!-- scrip for side manu bar -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";

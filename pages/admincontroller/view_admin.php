@@ -1,20 +1,82 @@
 <!-- view your datails -->
 <div class="main-work-pace">
-    <div class="conatainer w-50 m-auto border">
-        <h1 class="text-center p-4"> YOUR DETAILS</h1>
-        <div class="border">
-            <div class="conatiner d-flex">
-                <h1 class="text-start"><?= $user['name'] ?></h1>
-                <span class="positon:absolute;">
-                    
-                (<?= $user['role_id'] == 1 ? "admin" : " user " ?>)</span>
-            </div>
-            <br>
-            <div class="text-center">
-                <p>
-                    Larsen & Toubro Ltd, commonly known as L&T, is an Indian multinational conglomerate company, with business interests in engineering, construction, manufacturing, technology, information technology and financial services, headquartered in Mumbai. The company is counted among world's top five construction companies. Wikipedia
+    <div class="container  border-info  rounded " style="background:linear-gradient(to right, #FF4B2B, #FF416C)!important;text-decoration:none;color:white;width:65%;opacity:0.7;box-shadow:5px solid  #ffebe6 ">
+        <h1 class="text-center"><?= $user['name'] ?></h1>
+        <div>
+            <div class="conatiner">
+
+                <p class="text-center">
+                    (<?= $user['role_id'] == 1 ? "admin" : " user " ?>)
                 </p>
             </div>
         </div>
     </div>
+    <!-- chart can be placed here -->
+    <div class="row  d-flex justify-content-center text-center p-auto my-5">
+        <?php
+        $sql = "SELECT `ticket_id` FROM `ticket_table`";
+        $conn = new Connection;
+        $result = $conn->read($sql);
+        $total_ticket = 0;
+        if (is_array($result)) {
+            foreach ($result as $key) {
+                $total_ticket++;
+            }
+        }
+        ?>
+        <div class="col-lg-3 col-sm-4">
+            <div class="card rounded-circle border-info shadow-lg p-3 mb-5" style="width: 18rem;height:18rem;background:linear-gradient(to right, #FF4B2B, #FF416C)!important;text-decoration:none;color:white;">
+                <div class="card-body mt-5">
+                    <h1 class="card-title " style="font-size: 5rem;"><?= $total_ticket ?></h1>
+                    <h3 class="card-subtitle mb-2 text-muted">Total Ticket </h3>
+
+                </div>
+            </div>
+        </div>
+        <?php
+        $sql = "SELECT * FROM `purchase_table` WHERE 1";
+        $conn = new Connection;
+        $result = $conn->read($sql);
+        $t_tk_pur_count = 0;
+        if (is_array($result)) {
+            foreach ($result as $key) {
+                $t_tk_pur_count++;
+            }
+        }
+        ?>
+        <div class="col-lg-3 col-sm-4">
+            <div class="card rounded-circle border-info shadow-lg p-3 mb-5" style="width: 18rem;height:18rem;background:linear-gradient(to right, #FF4B2B, #FF416C)!important;text-decoration:none;color:white;">
+                <div class="card-body mt-5">
+                    <h1 class="card-title" style="font-size: 5rem;"><?= $t_tk_pur_count ?></h1>
+                    <h3 class="card-subtitle mb-2 text-muted">Total Purchased Count </h3>
+
+                </div>
+            </div>
+        </div>
+        <?php
+        $sql = "SELECT Ticket_price FROM `purchase_table`";
+        $conn = new Connection;
+        $result = $conn->read($sql);
+        $total = 0;
+        if (is_array($result)) {
+            foreach ($result as $key) {
+                $total = $key['Ticket_price'];
+                $grand_total += $total;
+            }
+        }
+        ?>
+        <div class="col-lg-3 col-sm-4">
+            <div class="card rounded-circle border-info shadow-lg p-3 mb-5" style="width: 18rem;height:18rem;background:linear-gradient(to right, #FF4B2B, #FF416C)!important;text-decoration:none;color:white;">
+                <div class="card-body mt-5">
+                    <h1 class="card-title" style="font-size: 5rem;"><?= $grand_total ?> <i class="fa fa-inr" aria-hidden="true"></i></h1>
+                    <h3 class="card-subtitle mb-2 text-muted">Total Amount</h3>
+
+                </div>
+            </div>
+        </div>
+        <?php
+
+        ?>
+    </div>
+
 </div>

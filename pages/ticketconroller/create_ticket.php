@@ -6,7 +6,7 @@
         <form method="Post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="row g-3 border">
             <div class="col-6">
                 <label for="inputEmail4" class="form-label">Ticket name</label>
-                <input type="text" name="tk_name" class="form-control" id="inputEmail4" placeholder="enter your email">
+                <input type="text" name="tk_name" class="form-control" id="inputEmail4" placeholder="ticket name please">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Ticket description</label>

@@ -46,6 +46,15 @@ class Connection
       } else {
         $this->msg = "ticket table not created.!!!";
       }
+       //create ticket purchase table..
+      $sql3 = "CREATE TABLE IF not EXISTS purchase_table(purchase_id int NOT NULL AUTO_INCREMENT,user_id int NOT NULL,user_name varchar(25) NOT NULL,purchase_date datetime,ticket_id int NOT NULL,ticket_name varchar(25) NOT NULL,Ticket_price int(50) NOT NULL, quantity TINYINT DEFAULT 1 NOT NULL,PRIMARY KEY (purchase_id))";
+      if ($this->conn->query($sql3)) {
+        # code...
+        $this->msg = "purchase ticket table created.";
+      } else {
+        $this->msg = "purchase ticket table not created.!!!";
+      }
+      
     } catch (Exception $ex) {
       //throw $th;
       die("connection die due to : " . $ex);
