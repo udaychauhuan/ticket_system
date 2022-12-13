@@ -33,10 +33,10 @@ $total = "";
                                     <li>
 
                                         <p class="dropdown-item d-flex" href="#"><span><i class="fa fa-ticket" aria-hidden="true"></i>
-                                            <?=  $row['ticket_name']; ?>  </span><span>
-                                            <a class="d-inline" href="./purchase_system.php/<?= $row['ticket_id'] ?>/<?= $user_id ?>" name="remove_item" type="btn" style="border: none;">
-                                            <span class="text-muted p-2"><i class="fa fa-minus" aria-hidden="true"></i></span> 
-                                            </a></span></p>
+                                                <?= $row['ticket_name']; ?></span><span class="m-1">(<?= $row['Ticket_price']; ?> <i class="fa fa-inr" aria-hidden="true"></i> )</span><span>
+                                                <a class="d-inline" href="./purchase_system.php/<?= $row['ticket_id'] ?>/<?= $user_id ?>" name="remove_item" type="btn" style="border: none;">
+                                                    <span class="text-danger p-2"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                                </a></span></p>
                                     </li>
 
                             <?php

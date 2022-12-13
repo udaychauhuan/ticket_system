@@ -1,6 +1,6 @@
 <?php
 include('../class/classloader.php');
-
+include('../pages/sent_mail/mail/mail.php');
 $msg = "";
 
 $register = false;
@@ -45,14 +45,15 @@ if (isset($_POST['register']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     if ((isset($_POST['name']) && $_POST['name'] != "") && (isset($_POST['phone']) && $_POST['phone'] != "") && (isset($_POST['email']) && $_POST['email'] != "") && (isset($_POST['password']) && $_POST['password'] != "") && (isset($_POST['confirm_password']) && $_POST['confirm_password'] != "")) {
         $sign = new Signup();
         $result = $sign->create_user($_POST);
-
-        if ($result == "") {
-
-            header("location:login&signup.php");
-            die;
-        } else {
+        include('../class/sent_mail/mail.php');
+        $mail = new Php_mailer($_POST['email'],$_POST['password'],$_POST['name']);
+        $mail->SendMail(); 
+        if ($result == ""){ 
+             header("location: login&signup.php");
+             die;
+         } else {
             $msg = $result;
-        }
+         }
     }
 } elseif (isset($_POST['login']) || $_SERVER['REQUEST_METHOD'] == 'POST') {
 
