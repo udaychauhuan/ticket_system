@@ -45,7 +45,7 @@ if (is_array($tickets)) {
                     </label>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-12 mb-2">
                 <input type="hidden" name="id" value="<?= $last ?>">
                 <button type="submit" name="tk_edit" class="btn btn-primary mb-2">EDIT</button>
             </div>
@@ -53,5 +53,6 @@ if (is_array($tickets)) {
         </form>
 
     </div>
+    <a class="buttton btn-sm bg-success decoration-none text-light fs-6  " style="position:relative; display:flex; margin-left:69%;margin-right:25%; margin-top:-2.5rem;"  href="/TicketManagement/pages/ticketconroller/view_ticket.php"> go back</a>
 </div>
 <?php include('../partials/footer.php') ?>

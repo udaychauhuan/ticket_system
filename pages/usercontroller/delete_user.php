@@ -63,5 +63,6 @@ $last = end($path);
                     }
 ?>
     </div>
+    <a class="buttton btn-sm bg-success decoration-none text-light fs-6  " style="position:relative; display:flex; margin-left:69%;margin-right:25%; margin-top:-1.8rem;"  href="/TicketManagement/pages/usercontroller/view_user.php"> go back</a>
 </div>
 <?php include('../partials/footer.php') ?>

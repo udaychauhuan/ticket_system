@@ -150,7 +150,9 @@ if (isset($_POST['delete_ticket'])) {
             header("location:/TicketManagement/pages/ticketconroller/view_ticket.php");
             die;
         } else {
-            $msg = "ticket  not deleted please check again .!!!";
+            $msg = "you can't deleted this ticket. !!!";
+            //  header("location:/TicketManagement/pages/ticketconroller/view_ticket.php");
+            //  die;
         }
     } else {
         $msg = "please check the  check box.!";

@@ -41,14 +41,20 @@ class Ticket
    // delete ticket
    public function delete_Ticket($id)
    {
-      $sql = "DELETE FROM `ticket_table` WHERE ticket_id = $id";
-      $conn = new Connection();
-      $result = $conn->save($sql);
-      if ($result) {
-         # code...
-         return true;
+      $conn = new Connection;
+      //checking that user purchas  anny thing or not;
+      $sql1 = "SELECT * FROM `purchase_table` WHERE `ticket_id` = $id";
+      $result1 = $conn->read($sql1);
+      if (!$result1) {
+        $sql = "DELETE FROM `ticket_table` WHERE ticket_id = $id";
+        $result = $conn->save($sql);
+        if ($result) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
-         return false;
+        return false;
       }
    }
    // view one ticket
