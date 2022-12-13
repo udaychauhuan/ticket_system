@@ -22,8 +22,7 @@ if ($user_status) {
 if (isset($_POST['edit'])) {
     if (($_POST['check'] == 'on') && (!empty($_POST['name']) || !empty($_POST['phone'] || !empty($_POST['email']) || !empty($_POST['password'])))) {
         $user_edit = new User();
-        $result = $user_edit->update_user($_POST, $_SESSION['ticket_userid']);
-
+        $result = $user_edit->update_self($_POST, $_SESSION['ticket_userid']);
         if ($result) {
             $msg = "update data succesfully .";
         } else {
@@ -68,6 +67,8 @@ if (isset($_POST['edit_user'])) {
         $result = $ed_user->update_user($_POST, $id);
         if ($result) {
             $msg = "user data updated succesfully .";
+            header("location:/TicketManagement/pages/usercontroller/view_user.php");
+            die;
         } else {
             $msg = "email already present .. try anothet email.!!!";
         }
@@ -87,6 +88,8 @@ if (isset($_POST['delete_user'])) {
         $result = $dl_user->delet_user($id);
         if ($result) {
             $msg = "user deleted  succesfully .";
+            header("location:/TicketManagement/pages/usercontroller/view_user.php");
+            die;
         } else {
             $msg = "you can't delete this user. !!!";
         }
@@ -123,6 +126,8 @@ if (isset($_POST['tk_edit'])) {
         $result = $ed_ticket->update_ticket($_POST, $id);
         if ($result) {
             $msg = "update ticket succesfully .";
+            header("location:/TicketManagement/pages/ticketconroller/view_ticket.php");
+            die;
         } else {
             $msg = "ticket not updated. please check again .!!!";
         }
@@ -140,11 +145,13 @@ if (isset($_POST['delete_ticket'])) {
         $dl_ticket = new Ticket();
         $result = $dl_ticket->delete_Ticket($id);
 
-        // if ($result) {
-        //     $msg = "user deleted  succesfully .";
-        // } else {
-        //     $msg = "user  not deleted please check again .!!!";
-        // }
+        if ($result) {
+            $msg = "ticketdeleted  succesfully .";
+            header("location:/TicketManagement/pages/ticketconroller/view_ticket.php");
+            die;
+        } else {
+            $msg = "ticket  not deleted please check again .!!!";
+        }
     } else {
         $msg = "please check the  check box.!";
     }
@@ -197,53 +204,52 @@ $status_alert = "<div class='alert' style='background-color:$color;text-align:ce
     <div id="mySidenav" class="sidenav" style="background: linear-gradient(to right, #FF4B2B, #FF416C)!important;text-decoration:none;color:white;">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <?php
-        if ( $user || $admin){
+        if ($user || $admin) {
             # code...
         ?>
-        <li 
-        <!-- profile details -->
-        <li class="nav-item dropdown" style="list-style-type:none;">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                PERSONAL<br>
-                DETAILS</a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="../index.php" target=""> VIEW</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item " href="../admincontroller/Edit_admin.php">EDIT</a>
-            </div>
-        </li>
+            <li <!-- profile details -->
+            <li class="nav-item dropdown" style="list-style-type:none;">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                    PERSONAL<br>
+                    DETAILS</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="../index.php" target=""> VIEW</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item " href="../admincontroller/Edit_admin.php">EDIT</a>
+                </div>
+            </li>
         <?php
         }
         if ($admin) {
             # code...
-       
+
         ?>
-        <div class="dropdown-divider"></div>
-        <!-- user details in case of admin -->
-        <li class="nav-item dropdown" style="list-style-type:none;">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                USER</a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="../usercontroller/view_user.php"><i class="fa fa-eye" aria-hidden="true"></i> VIEW USER</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item " href="../usercontroller/create_user.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> CREATE <br> USER</a>
-            </div>
-        </li>
-        <div class="dropdown-divider"></div>
-        <!-- ticket details in case of admin -->
-        <li class="nav-item dropdown" style="list-style-type:none;">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                TICKET</a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="../ticketconroller/view_ticket.php"><i class="fa fa-eye" aria-hidden="true"></i> VIEW TICKET</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item " href="../ticketconroller/create_ticket.php"> <i class="fa fa-plus-circle" aria-hidden="true"></i> CREATE <br> TICKET</a>
-            </div>
-        </li>
+            <div class="dropdown-divider"></div>
+            <!-- user details in case of admin -->
+            <li class="nav-item dropdown" style="list-style-type:none;">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    USER</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="../usercontroller/view_user.php"><i class="fa fa-eye" aria-hidden="true"></i> VIEW USER</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item " href="../usercontroller/create_user.php"><i class="fa fa-plus-circle" aria-hidden="true"></i> CREATE <br> USER</a>
+                </div>
+            </li>
+            <div class="dropdown-divider"></div>
+            <!-- ticket details in case of admin -->
+            <li class="nav-item dropdown" style="list-style-type:none;">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                    TICKET</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="../ticketconroller/view_ticket.php"><i class="fa fa-eye" aria-hidden="true"></i> VIEW TICKET</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item " href="../ticketconroller/create_ticket.php"> <i class="fa fa-plus-circle" aria-hidden="true"></i> CREATE <br> TICKET</a>
+                </div>
+            </li>
         <?php
-         }
-        
+        }
+
         ?>
         <div class="dropdown-divider"></div>
         <!-- logout function -->

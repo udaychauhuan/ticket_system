@@ -31,7 +31,7 @@ if (is_array($tickets)) {
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">Ticket description</label>
-                <textarea class="form-control" name="tk_desc" id="exampleFormControlTextarea1" rows="3"  value="<?= $tk_desc ?>"></textarea>
+                <textarea class="form-control" name="tk_desc" id="exampleFormControlTextarea1" rows="3"placeholder="<?= $tk_desc ?>"></textarea>
             </div>
             <div class="col-12">
                 <label for="inputAddress2" class="form-label">Ticket Price</label>

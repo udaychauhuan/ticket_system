@@ -35,7 +35,7 @@ class User
     }
   }
 
-  //update admin details
+  //update self details
   public function update_self($data, $id)
   {
     $name = $data['name'];
@@ -43,13 +43,13 @@ class User
     $email = $data['email'];
     $password = $data['password'];
     $query = "UPDATE `user_table` SET `name`='$name',`email`='$email',`phone`='$phone',`password`='$password' WHERE id = $id";
-    $conn = new Connection;
-    $result = $conn->save($query);
-    if ($result) {
+     $conn = new Connection;
+     $result = $conn->save($query);
+     if ($result) {
       return true;
-    } else {
-      return false;
-    }
+     } else {
+       return false;
+     }
   }
 
   //update user credentials

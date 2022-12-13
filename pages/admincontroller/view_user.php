@@ -25,19 +25,18 @@ $total = "";
                                     $total = $row['Ticket_price'];
                                     $grand_total += $total;
                                     $ticket_name = $row['ticket_name'];
-                                    echo $ticket_name;
+                                       
                                     // echo "<pre>";
                                     // print_r($row);
                                     // echo "</pre>";
                             ?>
                                     <li>
-        
+                    
                                         <a class="dropdown-item" href="#"><i class="fa fa-ticket" aria-hidden="true"></i>
-                                            <span> <?= $ticket_name ?> </span>
-                                            <input type="hidden" name="user_id" value="<?= $user_id ?>">
-                                            <input type="hidden" name="name" value="<?=  $ticket_name; ?>">
-                                             <button name="remove_item" type="submit" style="border: none;">
-                                                <span><i class="fa fa-minus" aria-hidden="true"></i></span></button> </a>
+                                            <span><?= $row['ticket_name']; ?></span>
+                                            <input type="hidden" name="ticket_id" value="<?= $row['ticket_id']; ?>">
+                                            <a href="./purchase_system.php/<?=$row['ticket_id']?>/<?=$user_id?>" name="remove_item" type="btn" style="border: none;" >
+                                                <span><i class="fa fa-minus" aria-hidden="true"></i></span></a></a>
                                     </li>
 
                             <?php
@@ -107,3 +106,8 @@ $total = "";
 
     </div>
 </div>
+<script>
+    function delete_product(id){
+        
+    }
+</script>

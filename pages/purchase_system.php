@@ -9,8 +9,8 @@ if (isset($_POST['buy_tickete'])) {
     $user_id = $_POST['user_id'];
     //echo "user id is ".$us_id. " and ticket id is ".$tk_id;
     //get elemenyts from the user table 
-    $sql = "SELECT `id`, `name` FROM `user_table` WHERE id = $user_id";
     $conn = new Connection();
+    $sql = "SELECT `id`, `name` FROM `user_table` WHERE id = $user_id";
     $result = $conn->read($sql);
     if ($result) {
         $user_name = $result[0]['name'];
@@ -37,13 +37,19 @@ if (isset($_POST['buy_tickete'])) {
     }
 }
 
-if (isset($_POST['remove_item'])) {
+$tk_id = $us_id = "";
+$uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri_segments = explode('/', $uri_path);
+$tk_id = $uri_segments[4]; // for www.example.com/user/account you will get 'user
+$us_id = $uri_segments[5];
+
+$sql = "DELETE FROM  `purchase_table` WHERE ticket_id = $tk_id AND user_id =$us_id";
+$conn = new Connection();
+$result = $conn->save($sql);
+if ($result) {
+    header("location: /TicketManagement/pages/index.php");
+    die;
+} else {
     # code...
-    // $tick_id = $usr_id = "";
-    // $tick_id = $_POST['tick_id'];
-    // $usr_id = $_POST['user_id'];
-    // echo $tick_id . " and " . $usr_id;
-    echo "<pre>";
-    print_r($_POST);
-    echo "</pre>";
+    echo "data not inserted";
 }
