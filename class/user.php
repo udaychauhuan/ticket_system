@@ -24,7 +24,9 @@ class User
     //      SELECT email FROM user_table WHERE email = '$email'
     //  ) LIMIT 1";
 
-    $query = "INSERT INTO `user_table`(`name`, `email`, `phone`, `role_id`, `password`) VALUES ('$name','$email','$phone','$role','$password')";
+    $query = "INSERT INTO `user_table` ( `name`, `email`, `phone`,  `role_id`, `password`)
+    SELECT * FROM (SELECT '$name' AS name, '$email' AS email,'$phone' AS phone,'0' AS role_id , '$password' AS password) AS tmp WHERE NOT EXISTS (
+    SELECT email FROM user_table WHERE email = '$email') LIMIT 1";
     $conn = new Connection();
     $result = $conn->save($query);
     if ($result) {
@@ -43,13 +45,13 @@ class User
     $email = $data['email'];
     $password = $data['password'];
     $query = "UPDATE `user_table` SET `name`='$name',`email`='$email',`phone`='$phone',`password`='$password' WHERE id = $id";
-     $conn = new Connection;
-     $result = $conn->save($query);
-     if ($result) {
+    $conn = new Connection;
+    $result = $conn->save($query);
+    if ($result) {
       return true;
-     } else {
-       return false;
-     }
+    } else {
+      return false;
+    }
   }
 
   //update user credentials
@@ -75,7 +77,7 @@ class User
         }
       }
     }
-    if (($check_mail == 0) && ($check_mail1 >= 0)) {
+    if (($check_mail <= 1) && ($check_mail1 >= 0)) {
 
       $query = "UPDATE `user_table` SET `name`='$name',`email`='$email',`phone`='$phone',`role_id`='$role' WHERE id = $id";
       $result = $conn->save($query);

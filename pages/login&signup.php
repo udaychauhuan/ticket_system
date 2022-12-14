@@ -44,16 +44,18 @@ if (isset($_POST['register']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ((isset($_POST['name']) && $_POST['name'] != "") && (isset($_POST['phone']) && $_POST['phone'] != "") && (isset($_POST['email']) && $_POST['email'] != "") && (isset($_POST['password']) && $_POST['password'] != "") && (isset($_POST['confirm_password']) && $_POST['confirm_password'] != "")) {
         $sign = new Signup();
+       // echo "step1";
         $result = $sign->create_user($_POST);
-        include('../class/sent_mail/mail.php');
-        $mail = new Php_mailer($_POST['email'],$_POST['password'],$_POST['name']);
-        $mail->SendMail(); 
-        if ($result == ""){ 
-             header("location: login&signup.php");
-             die;
-         } else {
-            $msg = $result;
-         }
+        /* include('../class/sent_mail/mail.php');
+        $mail = new Php_mailer($_POST['email'], $_POST['password'], $_POST['name']);
+        $mail->SendMail(); */
+        if ($result) {
+            // header("location: login&signup.php");
+            // die;
+        } else {
+           // echo "already presnt email";
+            $msg = "this email is alreay registered .. try another gmail.";
+        }
     }
 } elseif (isset($_POST['login']) || $_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -80,15 +82,22 @@ if (isset($_POST['register']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             # code...
             $msg = $result;
         }
-         
     }
 }
 if (isset($_POST['register']) && (!empty($_POST['name']) && !empty($_POST['phone']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirm_password']))) {
-
+    //condition to check that is $msg empty or not
+    $color = "";
+    if (!$result) {
+        $color = " #ff6666";
+    } else {
+        $color = "#99ff99";
+        $msg = " Registration succesfull. ";
+    }
+    
     $fun = 'this.parentElement.style.display="none"';
-    $status_alert = "<div class='alert' style='background-color:#99ff99;text-align:center;'><span class='closebtn' onclick='$fun'>&times;</span>
+    $status_alert = "<div class='alert' style='background-color:$color;text-align:center;'><span class='closebtn' onclick='$fun'>&times;</span>
                               <span style='font-size:17px;color:white;'>
-                               Registration succesfully .
+                               $msg
                               </span>
                          </div>";
 } elseif (isset($_POST['login']) && (!empty($_POST['email']) && !empty($_POST['password']))) {

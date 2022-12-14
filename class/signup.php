@@ -77,13 +77,26 @@ class Signup
         $email = $data['email'];
         $phone = $data['phone'];
         $password = $data['password'];
-        # query...
-        $query ="INSERT INTO `user_table`( `name`, `email`, `phone`, `password`) VALUES ('$name','$email','$phone','$password')";
         $conn = new Connection();
-        $result = $conn->save($query);
-        if ($result) {
-            return true;
+        //check email exist or not
+        //select query
+        $sql = " SELECT  `email` FROM `user_table` WHERE email = '$email'";
+        $result1 = $conn->read($sql);
+        // echo "step2";
+        //when same user id is not exist in the database
+        if (!$result1) {
+            // echo "your can try this.";
+            // echo "step3";
+            $query = "INSERT INTO `user_table` ( `name`, `email`, `phone`,  `role_id`, `password`)
+            SELECT * FROM (SELECT '$name' AS name, '$email' AS email,'$phone' AS phone,'0'      AS role_id , '$password' AS password) AS tmp WHERE NOT EXISTS (SELECT email FROM user_table WHERE email = '$email') LIMIT 1";
+            $result = $conn->save($query);
+            if ($result) {
+                return TRUE;
+            } else {
+                return false;
+            }
         } else {
+            //  echo "email is already exists .";
             return false;
         }
     }

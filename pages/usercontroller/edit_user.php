@@ -4,9 +4,9 @@ $url  = $_SERVER["PHP_SELF"];
 $path = explode("/", $url);
 $last = end($path);
 
-
+echo $last;
 $name = $phone = $email = $role = "";
-$query = "SELECT id,name,email,phone,role_id from user_table";
+$query = "SELECT id,name,email,phone,role_id from user_table where id = $last ";
 $conn =  new Connection;
 $tb_user = $conn->read($query);
 if (is_array($tb_user)) {

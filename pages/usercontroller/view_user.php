@@ -18,7 +18,9 @@
             <!--proper url  for the action is './usercontroller/edit_user.php?action=edit&id=$user['id']' -->
             <tbody>
                 <?php
-                $query = "SELECT id,name,email,phone ,role_id from user_table";
+                $id =$_SESSION['ticket_userid'];
+                echo $id;
+                $query = "SELECT id,name,email,phone ,role_id from user_table where id != $id";
                 $conn =  new Connection;
                 $tb_user = $conn->read($query);
                 if (is_array($tb_user)) {
